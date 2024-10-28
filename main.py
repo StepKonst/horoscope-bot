@@ -35,16 +35,16 @@ async def send_daily_horoscope():
     today = datetime.now().date()
 
     for user in users:
-        # if user.last_horoscope_date != today:
-        horoscope_text = generate_horoscope_message()
-        await bot.send_photo(
-            chat_id=user.telegram_id,
-            photo="https://www.pravmir.ru/wp-content/uploads/2015/08/Goroskop-768x480.jpg",
-            caption=horoscope_text,
-            reply_markup=get_update_button(),
-            parse_mode=ParseMode.HTML,
-        )
-        await update_user_horoscope(user.telegram_id, today, horoscope_text)
+        if user.last_horoscope_date != today:
+            horoscope_text = generate_horoscope_message()
+            await bot.send_photo(
+                chat_id=user.telegram_id,
+                photo="https://www.pravmir.ru/wp-content/uploads/2015/08/Goroskop-768x480.jpg",
+                caption=horoscope_text,
+                reply_markup=get_update_button(),
+                parse_mode=ParseMode.HTML,
+            )
+            await update_user_horoscope(user.telegram_id, today, horoscope_text)
 
 
 async def main() -> None:
